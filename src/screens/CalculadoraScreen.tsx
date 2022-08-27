@@ -10,10 +10,12 @@ export const CalculadoraScreen = () => {
 
   const clean = () => {
     setNumber("0");
+    setPreviousNumber("0");
   };
   const buildNumber = (textNumber: string) => {
 
     if (number.length > 10) return;
+    // if(number.startsWith())
     if (number.includes(".") && textNumber === ".") {
       // Punto decimal
       if (textNumber === ".") {
@@ -46,6 +48,9 @@ export const CalculadoraScreen = () => {
 
     setNumber(eval(previousNumber + operator + number));
   };
+  const delLastNumber = (text: string) => {
+     setNumber(number.slice(0, -1));
+  };
   return (
     <View style={styles.calculadoraContainer}>
       <Text style={styles.smallResult}>{previousNumber}</Text>
@@ -54,7 +59,7 @@ export const CalculadoraScreen = () => {
       <View style={styles.row}>
         <ButtonTap text="C" color="#9B9B9B" action={clean} />
         <ButtonTap text="+/-" color="#9B9B9B" action={clean} />
-        <ButtonTap text="del" color="#9B9B9B" action={clean} />
+        <ButtonTap text="del" color="#9B9B9B" action={delLastNumber} />
         <ButtonTap text="/" color="orange" action={insertOperator} />
       </View>
       <View style={styles.row}>
