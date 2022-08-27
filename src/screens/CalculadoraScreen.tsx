@@ -12,10 +12,28 @@ export const CalculadoraScreen = () => {
     setNumber("0");
   };
   const buildNumber = (textNumber: string) => {
-   if(number.length < 10)
-    setNumber(number + textNumber);
-   else
-    setNumber(number);
+
+    if (number.length > 10) return;
+    if (number.includes(".") && textNumber === ".") {
+      // Punto decimal
+      if (textNumber === ".") {
+        setNumber(number + textNumber);
+
+        // Evaluar si es otro cero, y hay un punto
+      } else if (textNumber === "0" && number.includes(".")) {
+        setNumber(number + textNumber);
+
+        // Evaluar si es diferente de cero y no tiene un punto
+      } else if (textNumber !== "0" && !number.includes(".")) {
+        setNumber(textNumber);
+
+        // Evitar 0000.0
+      } else if (textNumber === "0" && !number.includes(".")) {
+        setNumber(number);
+      } else {
+        setNumber(number + textNumber);
+      }
+    } else setNumber(number + textNumber);
 
   };
 
@@ -26,7 +44,7 @@ export const CalculadoraScreen = () => {
   };
   const calcultate = (equal: string) => {
 
-    setNumber(eval(number + operator + previousNumber));
+    setNumber(eval(previousNumber + operator + number));
   };
   return (
     <View style={styles.calculadoraContainer}>
